@@ -1,20 +1,21 @@
-# Gunakan gambar dasar Python
-FROM python:3.9-slim
+# Use the official Node.js image.
+# https://hub.docker.com/_/node
+FROM node:14
 
-# Set direktori kerja dalam container
-WORKDIR /app
+# Create and change to the app directory.
+WORKDIR /usr/src/app
 
-# Salin file requirements.txt ke direktori kerja
-COPY requirements.txt .
+# Copy application dependency manifests to the container image.
+COPY package*.json ./
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies.
+RUN npm install
 
-# Salin semua file dari direktori kerja host ke direktori kerja container
+# Copy the local code to the container image.
 COPY . .
 
-# Expose port yang digunakan oleh Flask
-EXPOSE 5000
+# Inform Docker that the container is listening on the specified port at runtime.
+EXPOSE 3000
 
-# Jalankan aplikasi
-CMD ["python", "bot.py"]
+# Run the web service on container startup.
+CMD [ "npm", "start" ]
