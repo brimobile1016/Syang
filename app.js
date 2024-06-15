@@ -1,21 +1,18 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
-const express = require('express');
-const bodyParser = require('body-parser');
-
 const token = '7270252127:AAHXq6ZTeisM-bi9s6-n3fELQKJhrfz7C8E';
-const bot = new TelegramBot(token, { polling: false });
-
-const app = express();
-app.use(bodyParser.json());
-
-app.post(`/bot${token}`, (req, res) => {
-    bot.processUpdate(req.body);
-    res.sendStatus(200);
-});
+const bot = new TelegramBot(token, { polling: true });
 
 const CLOUDFLARE_API_TOKEN = 'c73eRoRduw8NEWr2Q7DYCNhejpHZFUHRC1yLrMJE';
 const CLOUDFLARE_ZONE_ID = 'c73eRoRduw8NEWr2Q7DYCNhejpHZFUHRC1yLrMJE';
+
+const webhookUrl = `https://${req.headers.host}/bot${token}`;
+    bot.setWebHook(webhookUrl).then(() => {
+        console.log(`Webhook set to ${webhookUrl}`);
+    }).catch(err => {
+        console.error('Error setting webhook:', err);
+    }); 
+
 
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
@@ -97,15 +94,5 @@ bot.on('callback_query', (query) => {
     });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-    console.log('Bot is running...');
-    // Set webhook dynamically based on the domain
-    const webhookUrl = `https://${req.headers.host}/bot${token}`;
-    bot.setWebHook(webhookUrl).then(() => {
-        console.log(`Webhook set to ${webhookUrl}`);
-    }).catch(err => {
-        console.error('Error setting webhook:', err);
-    });
-});
+
+console.log('Bot is running...');
