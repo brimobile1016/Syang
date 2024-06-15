@@ -1,11 +1,8 @@
-const express = require('express');
+
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 const token = '7270252127:AAHXq6ZTeisM-bi9s6-n3fELQKJhrfz7C8E';
 const bot = new TelegramBot(token, { polling: true });
-
-const app = express();
-const PORT = process.env.PORT || 3000;
 
 const CLOUDFLARE_API_TOKEN = 'c73eRoRduw8NEWr2Q7DYCNhejpHZFUHRC1yLrMJE';
 const CLOUDFLARE_ZONE_ID = 'c73eRoRduw8NEWr2Q7DYCNhejpHZFUHRC1yLrMJE';
@@ -89,13 +86,5 @@ bot.on('callback_query', (query) => {
     });
 });
 
-// Express server setup
-app.get('/', (req, res) => {
-    res.send('Hello, this is the web interface for the Telegram bot.');
-});
-
-app.listen(PORT, () => {
-    console.log(`Web server is running on port ${PORT}`);
-});
 
 console.log('Bot is running...');
