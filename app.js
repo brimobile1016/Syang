@@ -46,7 +46,7 @@ bot.onText(/\/domain/, async (msg) => {
         };
         bot.sendMessage(chatId, 'Please choose a domain:', options);
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching domains:', error);
         bot.sendMessage(chatId, 'Failed to retrieve domains.');
     }
 });
@@ -76,10 +76,11 @@ bot.on('callback_query', (query) => {
                 if (response.data.success) {
                     bot.sendMessage(chatId, `Berhasil Create Subdomain !!!\n\n🌐 Subdomain: ${subdomain}\n📍 IP: ${ipAddress}`);
                 } else {
+                    console.error('Error response from Cloudflare:', response.data.errors);
                     bot.sendMessage(chatId, `Failed to add subdomain. Error: ${response.data.errors}`);
                 }
             } catch (error) {
-                console.error(error);
+                console.error('Error creating DNS record:', error);
                 bot.sendMessage(chatId, 'Failed to create DNS record.');
             }
         });
