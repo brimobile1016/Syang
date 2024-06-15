@@ -1,13 +1,14 @@
 {
   "name": "telegram-cloudflare-bot",
   "version": "1.0.0",
-  "description": "A Telegram bot to manage Cloudflare subdomains.",
+  "description": "A Telegram bot to manage Cloudflare subdomains and a web server.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "axios": "^1.2.1",
+    "express": "^4.17.1",
     "node-telegram-bot-api": "^0.56.0"
   },
   "author": "Your Name",
